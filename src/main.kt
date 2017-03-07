@@ -31,9 +31,9 @@ fun computeDtw(xs: DoubleArray, ys: DoubleArray): Double {
         prev = tmp
         curr[0] = prev[0] + squareDist(xs, idx_line, ys, 0)
         for (idx_col in 1 until n) {
-            val d11 = prev [idx_col - 1]
-            val d01 = curr [idx_col - 1]
-            val d10 = prev [idx_col]
+            val d11 = prev[idx_col - 1]
+            val d01 = curr[idx_col - 1]
+            val d10 = prev[idx_col]
             curr[idx_col] = min3(d11, d01, d10) + squareDist(xs, idx_line, ys, idx_col)
         }
     }
@@ -42,7 +42,7 @@ fun computeDtw(xs: DoubleArray, ys: DoubleArray): Double {
 
 
 fun main(args: Array<String>) {
-    val vec: List<DoubleArray> = File(args[1]).useLines { lines ->
+    val vec: List<DoubleArray> = File("50.csv").useLines { lines ->
         lines.drop(1).map {
             it.split(',').drop(1).map(String::toDouble).toList().toDoubleArray()
         }.toList()
