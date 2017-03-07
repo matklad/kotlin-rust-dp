@@ -42,7 +42,7 @@ fun computeDtw(xs: DoubleArray, ys: DoubleArray): Double {
 
 
 fun main(args: Array<String>) {
-    val vec: List<DoubleArray> = File("50.csv").useLines { lines ->
+    val vec: List<DoubleArray> = File("small.csv").useLines { lines ->
         lines.drop(1).map {
             it.split(',').drop(1).map(String::toDouble).toList().toDoubleArray()
         }.toList()

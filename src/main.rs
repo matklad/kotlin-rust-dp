@@ -11,8 +11,23 @@ fn square_dist(xs: &[f64], xidx: usize, ys: &[f64], yidx: usize) -> f64 {
     dif * dif
 }
 
-fn min3(x: f64, y: f64, z: f64) -> f64 {
-    if x < y { if x < z { x } else { z } } else { if y < z { y } else { z } }
+#[allow(unused)]
+fn min3_jmp(x: f64, y: f64, z: f64) -> f64 {
+    match (x < y, x < z, y < z) {
+        (true, true, _) => x,
+        (true, false, _) => z,
+        (false, _, true) => y,
+        (false, _, false) => z,
+    }
+}
+
+#[allow(unused)]
+fn min3_vec(x: f64, y: f64, z: f64) -> f64 {
+    if x < y {
+        if x < z { x } else { z }
+    } else {
+        if y < z { y } else { z }
+    }
 }
 
 fn compute_dtw(xs: &[f64], ys: &[f64]) -> f64 {
@@ -34,7 +49,8 @@ fn compute_dtw(xs: &[f64], ys: &[f64]) -> f64 {
             let d11 = prev[idx_col - 1];
             let d01 = curr[idx_col - 1];
             let d10 = prev[idx_col];
-            curr[idx_col] = min3(d11, d01, d10) + square_dist(xs, idx_line, ys, idx_col);
+            curr[idx_col] = min3_jmp(d11, d01, d10) + square_dist(xs, idx_line, ys, idx_col);
+//            curr[idx_col] = min3_jmp(d01, d10, d11) + square_dist(xs, idx_line, ys, idx_col);
         }
     }
     curr[n - 1]
